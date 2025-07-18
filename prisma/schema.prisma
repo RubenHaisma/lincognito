@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Subscription info
+  stripeCustomerId       String?
+  stripeSubscriptionId   String?
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+
+  // Profile info
+  avatar    String?
+  timezone  String @default("UTC")
+  
+  clients   Client[]
+  posts     Post[]
+  
+  @@map("users")
+}
+
+model Client {
+  id          String   @id @default(cuid())
+  name        String
+  company     String?
+  bio         String?
+  tone        String?  // professional, casual, authoritative, etc.
+  industry    String?
+  avatar      String?
+  linkedinUrl String?
+  
+  // Brand guidelines
+  brandGuidelines String?
+  hashtags        String[] // Array of preferred hashtags
+  keywords        String[] // Array of keywords
+  
+  // Settings
+  isActive    Boolean @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  posts       Post[]
+  
+  @@map("clients")
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  title       String?
+  content     String
+  status      PostStatus @default(DRAFT)
+  scheduledFor DateTime?
+  publishedAt DateTime?
+  
+  // Engagement metrics
+  likes       Int @default(0)
+  comments    Int @default(0)
+  shares      Int @default(0)
+  views       Int @default(0)
+  
+  // Metadata
+  hashtags    String[]
+  mentions    String[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("posts")
+}
+
+model ContentTemplate {
+  id          String   @id @default(cuid())
+  title       String
+  content     String
+  category    String?
+  tags        String[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  userId      String
+  
+  @@map("content_templates")
+}
+
+enum PostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
