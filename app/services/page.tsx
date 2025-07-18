@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -16,12 +18,6 @@ import {
   Star,
   ArrowRight
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Professional LinkedIn Ghostwriting Services | Expert LinkedIn Content Writers',
-  description: 'Premium LinkedIn ghostwriting services by certified professionals. Expert LinkedIn content writing, thought leadership, and social media ghostwriting for executives and businesses.',
-  keywords: 'linkedin ghostwriting services, professional linkedin ghostwriter, linkedin content writing services, executive linkedin ghostwriter, b2b linkedin ghostwriter, linkedin thought leadership writer',
-};
 
 const services = [
   {

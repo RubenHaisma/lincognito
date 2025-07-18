@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -15,12 +17,6 @@ import {
   Copy,
   ExternalLink
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'API Reference | Lincognito - LinkedIn Ghostwriter Platform',
-  description: 'Complete API documentation for Lincognito. Integrate LinkedIn ghostwriting functionality into your applications with our RESTful API.',
-  keywords: 'lincognito api, linkedin ghostwriter api, rest api documentation, developer integration',
-};
 
 const endpoints = [
   {

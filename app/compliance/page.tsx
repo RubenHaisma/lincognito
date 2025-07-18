@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -16,12 +18,6 @@ import {
   Eye,
   Scale
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Compliance & Security | Lincognito Data Protection Standards',
-  description: 'Learn about Lincognito\'s compliance with GDPR, SOC 2, and LinkedIn terms. Our security standards and data protection measures for ghostwriters.',
-  keywords: 'lincognito compliance, gdpr, soc 2, security, data protection, linkedin compliance',
-};
 
 const complianceStandards = [
   {

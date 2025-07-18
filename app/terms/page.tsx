@@ -1,14 +1,10 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, Scale, Shield, AlertTriangle, Users, CreditCard } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Terms of Service | Lincognito Legal Terms & Conditions',
-  description: 'Read Lincognito\'s terms of service and legal conditions for using our LinkedIn ghostwriting platform. Understand your rights and responsibilities.',
-  keywords: 'lincognito terms of service, legal terms, conditions, user agreement',
-};
 
 const sections = [
   {

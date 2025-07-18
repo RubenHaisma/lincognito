@@ -6,7 +6,10 @@ import { Providers } from '@/components/providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'LinkedIn Ghostwriter | Professional LinkedIn Content Writing Services - Lincognito',
+  title: {
+    template: '%s | Lincognito',
+    default: 'LinkedIn Ghostwriter | Professional LinkedIn Content Writing Services - Lincognito'
+  },
   description: 'Top-rated LinkedIn ghostwriter platform. Professional LinkedIn content writing, ghostwriting services, and social media management. Boost your LinkedIn presence with expert ghostwriters.',
   keywords: 'linkedin ghostwriter, professional linkedin ghostwriter, linkedin content writer, linkedin ghostwriting services, linkedin post writer, social media ghostwriter, linkedin content creation, executive linkedin ghostwriter, b2b linkedin ghostwriter, linkedin thought leadership writer',
   authors: [{ name: 'Lincognito Team' }],

@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -16,12 +18,6 @@ import {
   Download,
   ExternalLink
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Documentation | Lincognito - LinkedIn Ghostwriter Platform',
-  description: 'Complete documentation for Lincognito LinkedIn ghostwriting platform. Learn how to manage multiple client profiles, schedule content, and track engagement.',
-  keywords: 'lincognito documentation, linkedin ghostwriter guide, platform documentation, user manual',
-};
 
 const sections = [
   {

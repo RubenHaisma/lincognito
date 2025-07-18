@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -17,12 +19,6 @@ import {
   ArrowRight,
   FileText
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: '10 LinkedIn Content Writing Templates That Convert | Free Templates',
-  description: 'Proven LinkedIn content writing templates used by top ghostwriters. Free LinkedIn post templates that drive engagement and generate leads for clients.',
-  keywords: 'linkedin content templates, linkedin post templates, linkedin writing templates, linkedin content writing, ghostwriting templates',
-};
 
 export default function LinkedInContentWritingTemplates() {
   const templates = [

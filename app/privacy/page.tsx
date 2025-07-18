@@ -1,14 +1,10 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Eye, Lock, Database, Users, Globe } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Privacy Policy | Lincognito Data Protection & Privacy',
-  description: 'Learn how Lincognito protects your privacy and handles your data. Our comprehensive privacy policy for LinkedIn ghostwriting platform users.',
-  keywords: 'lincognito privacy policy, data protection, gdpr compliance, privacy rights',
-};
 
 const sections = [
   {

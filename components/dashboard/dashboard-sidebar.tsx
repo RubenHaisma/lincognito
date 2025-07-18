@@ -59,7 +59,7 @@ export function DashboardSidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={cn(
+              className={cn(`sidebar-${item.name.toLowerCase().replace(' ', '-')}`,
                 "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                 pathname === item.href
                   ? "bg-primary text-white"

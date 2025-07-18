@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -5,12 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
-
-export const metadata: Metadata = {
-  title: 'LinkedIn Ghostwriter Blog | Expert Tips & Strategies - Lincognito',
-  description: 'Expert LinkedIn ghostwriting tips, strategies, and insights. Learn from professional LinkedIn ghostwriters and grow your LinkedIn content writing business.',
-  keywords: 'linkedin ghostwriter blog, linkedin content writing tips, ghostwriting strategies, linkedin marketing, professional linkedin ghostwriter advice',
-};
 
 const blogPosts = [
   {

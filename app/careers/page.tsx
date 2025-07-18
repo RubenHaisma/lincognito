@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -15,12 +17,6 @@ import {
   GraduationCap,
   ArrowRight
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Careers | Join the Lincognito Team',
-  description: 'Join Lincognito and help build the future of LinkedIn ghostwriting. Explore open positions and learn about our company culture.',
-  keywords: 'lincognito careers, jobs, linkedin ghostwriter jobs, remote work, startup careers',
-};
 
 const openPositions = [
   {

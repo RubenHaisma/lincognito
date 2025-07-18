@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -17,12 +19,6 @@ import {
   Users,
   Briefcase
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Contact Us | Lincognito Support & Sales',
-  description: 'Get in touch with the Lincognito team. Contact our support, sales, or partnerships team for help with LinkedIn ghostwriting platform.',
-  keywords: 'contact lincognito, support, sales, help, linkedin ghostwriter support',
-};
 
 const contactMethods = [
   {

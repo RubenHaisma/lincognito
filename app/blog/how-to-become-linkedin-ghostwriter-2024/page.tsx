@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -15,12 +17,6 @@ import {
   Award,
   ArrowRight
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'How to Become a Professional LinkedIn Ghostwriter in 2024 | Complete Guide',
-  description: 'Learn how to become a professional LinkedIn ghostwriter in 2024. Complete guide covering skills, pricing, client acquisition, and tools for LinkedIn content writing success.',
-  keywords: 'how to become linkedin ghostwriter, professional linkedin ghostwriter, linkedin content writer, ghostwriting career, linkedin writing jobs',
-};
 
 export default function HowToBecomeLinkedInGhostwriter() {
   const steps = [

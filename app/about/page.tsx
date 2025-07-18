@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -15,12 +17,6 @@ import {
   MapPin,
   Calendar
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'About Us | Lincognito - LinkedIn Ghostwriter Platform',
-  description: 'Learn about Lincognito\'s mission to empower LinkedIn ghostwriters with professional tools and services. Meet our team and discover our story.',
-  keywords: 'about lincognito, linkedin ghostwriter company, team, mission, story',
-};
 
 const team = [
   {

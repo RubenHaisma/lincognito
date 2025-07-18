@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -5,12 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Cookie, Shield, BarChart3, Settings, Eye } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Cookie Policy | Lincognito Cookie Usage & Privacy',
-  description: 'Learn about how Lincognito uses cookies and tracking technologies. Manage your cookie preferences and understand your privacy options.',
-  keywords: 'lincognito cookie policy, cookies, tracking, privacy preferences',
-};
 
 const cookieTypes = [
   {

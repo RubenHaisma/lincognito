@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -15,12 +17,6 @@ import {
   BarChart3,
   ArrowRight
 } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'LinkedIn Ghostwriting Pricing Guide 2024 | What to Charge Clients',
-  description: 'Complete LinkedIn ghostwriting pricing guide. Learn what to charge for LinkedIn content writing, ghostwriting services, and how to price your LinkedIn writing packages.',
-  keywords: 'linkedin ghostwriting pricing, linkedin ghostwriter rates, linkedin content writing prices, ghostwriting fees, linkedin writing services cost',
-};
 
 export default function LinkedInGhostwritingPricingGuide() {
   const pricingTiers = [
