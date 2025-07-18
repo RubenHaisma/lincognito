@@ -32,7 +32,7 @@ export function PricingSection({ onGetStarted }: PricingSectionProps) {
     },
     {
       name: 'Starter',
-      price: '€10',
+      price: '$10',
       period: 'per month',
       description: 'Ideal for growing ghostwriters',
       icon: Crown,

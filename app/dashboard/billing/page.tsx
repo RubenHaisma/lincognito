@@ -46,7 +46,7 @@ export default function BillingPage() {
     {
       id: 'starter',
       name: 'Starter',
-      price: '€10',
+      price: '$10',
       period: 'per month',
       icon: Crown,
       popular: true,
@@ -63,7 +63,7 @@ export default function BillingPage() {
     {
       id: 'professional',
       name: 'Professional',
-      price: '€30',
+      price: '$30',
       period: 'per month',
       icon: Rocket,
       features: [
@@ -88,7 +88,7 @@ export default function BillingPage() {
     {
       id: 'inv_001',
       date: '2024-01-15',
-      amount: '€10.00',
+      amount: '$10.00',
       status: 'paid',
       description: 'Starter Plan - January 2024',
       downloadUrl: '#'
@@ -96,7 +96,7 @@ export default function BillingPage() {
     {
       id: 'inv_002',
       date: '2023-12-15',
-      amount: '€10.00',
+      amount: '$10.00',
       status: 'paid',
       description: 'Starter Plan - December 2023',
       downloadUrl: '#'
@@ -104,7 +104,7 @@ export default function BillingPage() {
     {
       id: 'inv_003',
       date: '2023-11-15',
-      amount: '€10.00',
+      amount: '$10.00',
       status: 'paid',
       description: 'Starter Plan - November 2023',
       downloadUrl: '#'
@@ -145,7 +145,7 @@ export default function BillingPage() {
                       Starter Plan
                     </h3>
                     <p className="text-slate-600 dark:text-slate-400">
-                      €10 per month • Billed monthly
+                      $10 per month • Billed monthly
                     </p>
                     <p className="text-sm text-slate-500 mt-1">
                       Next billing date: February 15, 2024

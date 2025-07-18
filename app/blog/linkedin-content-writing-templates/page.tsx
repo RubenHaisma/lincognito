@@ -29,9 +29,9 @@ export default function LinkedInContentWritingTemplates() {
       engagement: 'High',
       description: 'Share a personal experience that connects to a business lesson',
       template: `[Personal Hook]
-Last week, I made a mistake that cost us €10,000...
+Last week, I made a mistake that cost us $10,000...
 
-[Story Development]
+[Story Development] 
 Here's what happened: [Brief story with specific details]
 
 [The Lesson]

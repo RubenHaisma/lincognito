@@ -23,27 +23,27 @@ export default function LinkedInGhostwritingPricingGuide() {
     {
       level: 'Entry Level',
       experience: '0-1 years',
-      perPost: '€15-€35',
-      monthly: '€300-€800',
-      hourly: '€20-€40',
+      perPost: '$15-$35',
+      monthly: '$300-$800',
+      hourly: '$20-$40',
       description: 'New ghostwriters building their portfolio',
       clients: 'Small businesses, startups, individual professionals'
     },
     {
       level: 'Intermediate',
       experience: '1-3 years',
-      perPost: '€35-€75',
-      monthly: '€800-€2000',
-      hourly: '€40-€80',
+      perPost: '$35-$75',
+      monthly: '$800-$2000',
+      hourly: '$40-$80',
       description: 'Established ghostwriters with proven results',
       clients: 'Mid-size companies, established professionals'
     },
     {
       level: 'Expert',
       experience: '3+ years',
-      perPost: '€75-€150',
-      monthly: '€2000-€5000',
-      hourly: '€80-€150',
+      perPost: '$75-$150',
+      monthly: '$2000-$5000',
+      hourly: '$80-$150',
       description: 'Top-tier ghostwriters with premium positioning',
       clients: 'Enterprise clients, C-suite executives, thought leaders'
     }
@@ -54,19 +54,19 @@ export default function LinkedInGhostwritingPricingGuide() {
       factor: 'Client Industry',
       impact: 'High',
       description: 'Tech, finance, and consulting typically pay 30-50% more than other industries',
-      examples: ['Tech: €50-€100/post', 'Finance: €60-€120/post', 'Healthcare: €40-€80/post']
+      examples: ['Tech: $50-$100/post', 'Finance: $60-$120/post', 'Healthcare: $40-$80/post']
     },
     {
       factor: 'Content Complexity',
       impact: 'Medium',
       description: 'Technical content, thought leadership, and research-heavy posts command premium rates',
-      examples: ['Simple updates: €25-€40', 'Thought leadership: €60-€100', 'Technical content: €80-€150']
+      examples: ['Simple updates: $25-$40', 'Thought leadership: $60-$100', 'Technical content: $80-$150']
     },
     {
       factor: 'Client Size',
       impact: 'High',
       description: 'Larger companies typically have bigger budgets and pay higher rates',
-      examples: ['Startups: €20-€50/post', 'Mid-size: €40-€80/post', 'Enterprise: €80-€150/post']
+      examples: ['Startups: $20-$50/post', 'Mid-size: $40-$80/post', 'Enterprise: $80-$150/post']
     },
     {
       factor: 'Geographic Location',
@@ -79,7 +79,7 @@ export default function LinkedInGhostwritingPricingGuide() {
   const packageExamples = [
     {
       name: 'LinkedIn Starter Package',
-      price: '€500/month',
+      price: '$500/month',
       includes: [
         '4 LinkedIn posts per month',
         'Content strategy consultation',
@@ -90,7 +90,7 @@ export default function LinkedInGhostwritingPricingGuide() {
     },
     {
       name: 'Professional Growth Package',
-      price: '€1,200/month',
+      price: '$1,200/month',
       includes: [
         '8 LinkedIn posts per month',
         'Content calendar planning',
@@ -103,7 +103,7 @@ export default function LinkedInGhostwritingPricingGuide() {
     },
     {
       name: 'Executive Thought Leadership',
-      price: '€2,500/month',
+      price: '$2,500/month',
       includes: [
         '12 LinkedIn posts per month',
         'Thought leadership strategy',
@@ -161,11 +161,11 @@ export default function LinkedInGhostwritingPricingGuide() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-2">€45</div>
+                  <div className="text-2xl font-bold text-primary mb-2">$45</div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">Average per post</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-2">€1,500</div>
+                  <div className="text-2xl font-bold text-primary mb-2">$1,500</div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">Monthly retainer</div>
                 </div>
                 <div className="text-center">

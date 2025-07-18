@@ -58,21 +58,21 @@ export default function HowToBecomeLinkedInGhostwriter() {
   const pricingModels = [
     {
       model: 'Per Post',
-      range: '€25-€100',
+      range: '$25-$100',
       description: 'Charge per individual LinkedIn post',
       pros: ['Simple pricing', 'Easy to scale'],
       cons: ['Inconsistent income', 'Time-consuming billing']
     },
     {
       model: 'Monthly Retainer',
-      range: '€500-€3000',
+      range: '$500-$3000',
       description: 'Fixed monthly fee for ongoing content',
       pros: ['Predictable income', 'Long-term relationships'],
       cons: ['Scope creep risk', 'Higher commitment']
     },
     {
       model: 'Package Deals',
-      range: '€200-€800',
+      range: '$200-$800',
       description: 'Bundled services for specific outcomes',
       pros: ['Higher value perception', 'Clear deliverables'],
       cons: ['Complex pricing', 'Limited flexibility']
@@ -123,7 +123,7 @@ export default function HowToBecomeLinkedInGhostwriter() {
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-primary mb-2">€2,000+</div>
+                  <div className="text-2xl font-bold text-primary mb-2">$2,000+</div>
                   <div className="text-sm text-slate-600 dark:text-slate-400">Average Monthly Income</div>
                 </div>
                 <div className="text-center">

@@ -430,7 +430,7 @@ export default function SettingsPage() {
                             <Badge>Active</Badge>
                           </div>
                           <p className="text-slate-600 dark:text-slate-400">
-                            €10/month • Up to 5 clients • Advanced features
+                            $10/month • Up to 5 clients • Advanced features
                           </p>
                           <p className="text-sm text-slate-500 mt-1">
                             Next billing date: February 15, 2024
@@ -482,9 +482,9 @@ export default function SettingsPage() {
                     <CardContent>
                       <div className="space-y-4">
                         {[
-                          { date: 'Jan 15, 2024', amount: '€10.00', status: 'Paid' },
-                          { date: 'Dec 15, 2023', amount: '€10.00', status: 'Paid' },
-                          { date: 'Nov 15, 2023', amount: '€10.00', status: 'Paid' },
+                          { date: 'Jan 15, 2024', amount: '$10.00', status: 'Paid' },
+                          { date: 'Dec 15, 2023', amount: '$10.00', status: 'Paid' },
+                          { date: 'Nov 15, 2023', amount: '$10.00', status: 'Paid' },
                         ].map((invoice, index) => (
                           <div key={index} className="flex items-center justify-between py-2 border-b border-slate-200 dark:border-slate-700 last:border-0">
                             <div>
