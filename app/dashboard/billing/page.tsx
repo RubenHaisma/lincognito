@@ -33,7 +33,7 @@ export default function BillingPage() {
     {
       id: 'free',
       name: 'Free',
-      price: '€0',
+      price: '$0',
       priceId: '',
       period: 'forever',
       icon: Zap,

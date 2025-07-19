@@ -87,7 +87,7 @@ const benefits = [
   {
     icon: GraduationCap,
     title: 'Learning Budget',
-    description: '€2,000 annual budget for courses, conferences, and books'
+    description: '$2,000 annual budget for courses, conferences, and books'
   },
   {
     icon: Plane,

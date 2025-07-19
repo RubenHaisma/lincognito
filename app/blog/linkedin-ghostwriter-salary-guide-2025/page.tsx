@@ -561,7 +561,7 @@ export default function LinkedInGhostwriterSalaryGuide() {
                 <div className="text-center p-4 border border-slate-200 dark:border-slate-700 rounded-lg">
                   <MapPin className="h-6 w-6 text-primary mx-auto mb-2" />
                   <h3 className="font-semibold text-slate-900 dark:text-slate-100">European Union</h3>
-                  <div className="text-lg font-bold text-primary">€50,000</div>
+                  <div className="text-lg font-bold text-primary">$50,000</div>
                   <div className="text-sm text-slate-500">Average Annual</div>
                 </div>
                 

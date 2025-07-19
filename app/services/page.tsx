@@ -30,7 +30,7 @@ const services = [
       'Executive voice development',
       'Strategic content planning'
     ],
-    price: 'From €500/month',
+    price: 'From $500/month',
     popular: true,
     icon: Users
   },
@@ -44,7 +44,7 @@ const services = [
       'Multi-platform integration',
       'Performance tracking'
     ],
-    price: 'From €300/month',
+    price: 'From $300/month',
     popular: false,
     icon: TrendingUp
   },
@@ -58,7 +58,7 @@ const services = [
       'Engagement optimization',
       'Authority building strategy'
     ],
-    price: 'From €400/month',
+    price: 'From $400/month',
     popular: false,
     icon: MessageSquare
   }

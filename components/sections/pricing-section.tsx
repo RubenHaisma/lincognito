@@ -13,7 +13,7 @@ export function PricingSection({ onGetStarted }: PricingSectionProps) {
   const plans = [
     {
       name: 'Free',
-      price: '€0',
+      price: '$0',
       period: 'forever',
       description: 'Perfect for trying out Lincognito',
       icon: Zap,
@@ -51,7 +51,7 @@ export function PricingSection({ onGetStarted }: PricingSectionProps) {
     },
     {
       name: 'Professional',
-      price: '€30',
+      price: '$30',
       period: 'per month',
       description: 'For established ghostwriting agencies',
       icon: Rocket,
