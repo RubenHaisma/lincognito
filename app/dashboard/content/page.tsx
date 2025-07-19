@@ -11,7 +11,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar';
-import { Plus, Edit, Trash2, FileText, Calendar, Send, Clock, CheckCircle } from 'lucide-react';
+import { PostPublishingWorkflow } from '@/components/dashboard/post-publishing-workflow';
+import { ClientCollaborationPanel } from '@/components/dashboard/client-collaboration-panel';
+import { Plus, Edit, Trash2, FileText, Calendar, Send, Clock, CheckCircle, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
 
@@ -54,6 +56,8 @@ export default function ContentPage() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [selectedClient, setSelectedClient] = useState<string>('all');
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [showCollaboration, setShowCollaboration] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -154,26 +158,31 @@ export default function ContentPage() {
   };
 
   const handlePublish = async (postId: string) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/posts/publish', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ postId }),
-      });
+    // This now triggers the publishing workflow component
+    const post = posts.find(p => p.id === postId);
+    if (post) {
+      setSelectedPost(post);
+    }
+  };
 
-      if (response.ok) {
-        toast.success('Post published to LinkedIn successfully!');
-        fetchPosts();
-      } else {
-        const error = await response.json();
-        toast.error(error.error || 'Failed to publish post');
-      }
-    } catch (error) {
-      toast.error('Failed to publish post');
+  const handlePublishComplete = () => {
+    setSelectedPost(null);
+    fetchPosts();
+  };
+
+  const handleCollaboration = (post: Post) => {
+    setSelectedPost(post);
+    setShowCollaboration(true);
+  };
+
+  const handleStatusChange = (newStatus: string) => {
+    if (selectedPost) {
+      // Update post status in the list
+      setPosts(posts.map(post => 
+        post.id === selectedPost.id 
+          ? { ...post, status: newStatus as any }
+          : post
+      ));
     }
   };
 
@@ -427,14 +436,23 @@ export default function ContentPage() {
                             <Edit className="h-4 w-4" />
                           </Button>
                           {post.status === 'DRAFT' && (
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              onClick={() => handlePublish(post.id)}
-                              className="text-green-600 hover:text-green-700"
-                            >
-                              <Send className="h-4 w-4" />
-                            </Button>
+                            <>
+                              <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                onClick={() => handleCollaboration(post)}
+                                className="text-blue-600 hover:text-blue-700"
+                              >
+                                <MessageSquare className="h-4 w-4" />
+                              </Button>
+                              <PostPublishingWorkflow
+                                postId={post.id}
+                                postTitle={post.title || 'Untitled Post'}
+                                postContent={post.content}
+                                clientName={post.client.name}
+                                onPublishComplete={handlePublishComplete}
+                              />
+                            </>
                           )}
                           <Button variant="ghost" size="sm">
                             <Trash2 className="h-4 w-4" />
@@ -492,6 +510,39 @@ export default function ContentPage() {
               </div>
             )}
           </div>
+
+          {/* Collaboration Panel Dialog */}
+          {selectedPost && showCollaboration && (
+            <Dialog open={showCollaboration} onOpenChange={setShowCollaboration}>
+              <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle>
+                    Collaborate on: {selectedPost.title || 'Untitled Post'}
+                  </DialogTitle>
+                </DialogHeader>
+                
+                <ClientCollaborationPanel
+                  postId={selectedPost.id}
+                  clientId={selectedPost.client.id}
+                  clientName={selectedPost.client.name}
+                  clientAvatar={selectedPost.client.avatar}
+                  currentStatus={selectedPost.status.toLowerCase() as any}
+                  onStatusChange={handleStatusChange}
+                />
+              </DialogContent>
+            </Dialog>
+          )}
+
+          {/* Publishing Workflow for selected post */}
+          {selectedPost && !showCollaboration && (
+            <PostPublishingWorkflow
+              postId={selectedPost.id}
+              postTitle={selectedPost.title || 'Untitled Post'}
+              postContent={selectedPost.content}
+              clientName={selectedPost.client.name}
+              onPublishComplete={handlePublishComplete}
+            />
+          )}
         </main>
       </div>
     </div>

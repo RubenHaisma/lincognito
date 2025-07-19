@@ -16,6 +16,7 @@ import { Plus, Edit, Trash2, Users, TrendingUp, Calendar, MoreHorizontal } from 
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
 import { LinkedInConnection } from '@/components/dashboard/linkedin-connection';
+import Link from 'next/link';
 
 interface Client {
   id: string;
@@ -437,10 +438,12 @@ export default function ClientsPage() {
                               <Calendar className="h-4 w-4 mr-1" />
                               Schedule
                             </Button>
-                            <Button variant="outline" size="sm">
-                              <TrendingUp className="h-4 w-4 mr-1" />
-                              Analytics
-                            </Button>
+                            <Link href={`/dashboard/clients/${client.id}/analytics`}>
+                              <Button variant="outline" size="sm">
+                                <TrendingUp className="h-4 w-4 mr-1" />
+                                Analytics
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       </CardContent>

@@ -13,6 +13,7 @@ import {
 import { Bell, Search, Settings, LogOut, User, Shield } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export function DashboardHeader() {
   const { user, logout } = useAuth();
@@ -34,16 +35,20 @@ export function DashboardHeader() {
         </div>
         
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" className="relative">
+          <Link href="/dashboard/search">
+            <Button variant="ghost" size="sm" className="relative">
             <Search className="h-4 w-4" />
-          </Button>
+            </Button>
+          </Link>
           
-          <Button variant="ghost" size="sm" className="relative">
+          <Link href="/dashboard/notifications">
+            <Button variant="ghost" size="sm" className="relative">
             <Bell className="h-4 w-4" />
             <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
               2
             </span>
-          </Button>
+            </Button>
+          </Link>
           
           <ModeToggle />
           
