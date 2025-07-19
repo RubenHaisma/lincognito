@@ -563,7 +563,7 @@ export default function ContentPage() {
         <DashboardHeader />
         <div className="flex">
           <DashboardSidebar />
-          <main className="flex-1 p-8 ml-64">
+          <main className="flex-1 p-8 ml-64 mt-16">
             <div className="animate-pulse">
               <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
               <div className="space-y-4">

@@ -195,7 +195,7 @@ function ClientsContent() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
