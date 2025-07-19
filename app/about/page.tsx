@@ -93,7 +93,7 @@ const milestones = [
     description: 'Raised $2M to accelerate product development and team growth.'
   },
   {
-    year: '2024',
+    year: '2025',
     title: '1,200+ Users',
     description: 'Now serving over 1,200 professional LinkedIn ghostwriters worldwide.'
   }

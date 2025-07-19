@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyToken } from '@/lib/auth';
+import { sendClientAddedEmail } from '@/lib/email';
 import { z } from 'zod';
 
 const clientSchema = z.object({
@@ -57,7 +58,23 @@ export async function POST(request: NextRequest) {
         ...data,
         userId,
       },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
+
+    // Send client added notification email
+    try {
+      await sendClientAddedEmail(client.user.email, client.user.name, client.name);
+    } catch (emailError) {
+      console.error('Failed to send client added email:', emailError);
+      // Don't fail client creation if email fails
+    }
 
     return NextResponse.json(client);
   } catch (error) {

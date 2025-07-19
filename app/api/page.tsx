@@ -97,7 +97,7 @@ const client = await lincognito.clients.create({
 const post = await lincognito.posts.create({
   clientId: client.id,
   content: 'Exciting news about our latest product...',
-  scheduledFor: '2024-01-15T10:00:00Z',
+  scheduledFor: '2025-01-15T10:00:00Z',
   hashtags: ['#innovation', '#startup']
 });`,
   
@@ -119,7 +119,7 @@ new_client = client.clients.create({
 post = client.posts.create({
     'client_id': new_client['id'],
     'content': 'Exciting news about our latest product...',
-    'scheduled_for': '2024-01-15T10:00:00Z',
+    'scheduled_for': '2025-01-15T10:00:00Z',
     'hashtags': ['#innovation', '#startup']
 })`,
 
@@ -142,7 +142,7 @@ curl -X POST https://api.lincognito.com/api/posts \\
   -d '{
     "clientId": "client-id",
     "content": "Exciting news about our latest product...",
-    "scheduledFor": "2024-01-15T10:00:00Z",
+    "scheduledFor": "2025-01-15T10:00:00Z",
     "hashtags": ["#innovation", "#startup"]
   }'`
 };

@@ -433,7 +433,7 @@ export default function SettingsPage() {
                             $10/month • Up to 5 clients • Advanced features
                           </p>
                           <p className="text-sm text-slate-500 mt-1">
-                            Next billing date: February 15, 2024
+                            Next billing date: February 15, 2025
                           </p>
                         </div>
                         <div className="text-right">
@@ -482,7 +482,7 @@ export default function SettingsPage() {
                     <CardContent>
                       <div className="space-y-4">
                         {[
-                          { date: 'Jan 15, 2024', amount: '$10.00', status: 'Paid' },
+                          { date: 'Jan 15, 2025', amount: '$10.00', status: 'Paid' },
                           { date: 'Dec 15, 2023', amount: '$10.00', status: 'Paid' },
                           { date: 'Nov 15, 2023', amount: '$10.00', status: 'Paid' },
                         ].map((invoice, index) => (

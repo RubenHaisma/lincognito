@@ -93,7 +93,7 @@ export default function PrivacyPage() {
               Your privacy is important to us. This policy explains how we collect, use, and protect your information.
             </p>
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Last updated: January 15, 2024
+              Last updated: July 19, 2025
             </p>
           </div>
 

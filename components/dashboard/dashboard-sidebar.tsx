@@ -14,6 +14,7 @@ import {
   Settings, 
   CreditCard,
   FileText,
+  Building,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
@@ -29,6 +30,7 @@ export function DashboardSidebar() {
     { name: 'Analytics', href: '/dashboard/analytics', icon: BarChart3 },
     { name: 'Messages', href: '/dashboard/messages', icon: MessageSquare },
     { name: 'Content Library', href: '/dashboard/content', icon: FileText },
+    { name: 'Agency', href: '/dashboard/agency', icon: Building },
     { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
     { name: 'Settings', href: '/dashboard/settings', icon: Settings },
   ];

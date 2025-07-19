@@ -17,20 +17,24 @@ import {
   Crown,
   Zap,
   Rocket,
+  Building,
   Check,
   X
 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
+import { toast } from 'sonner';
 
 export default function BillingPage() {
   const { user } = useAuth();
   const [currentPlan] = useState('starter');
+  const [isLoading, setIsLoading] = useState(false);
 
   const plans = [
     {
       id: 'free',
       name: 'Free',
       price: '€0',
+      priceId: '',
       period: 'forever',
       icon: Zap,
       features: [
@@ -41,12 +45,14 @@ export default function BillingPage() {
         { name: 'Advanced analytics', included: false },
         { name: 'Client collaboration tools', included: false },
         { name: 'Priority support', included: false },
+        { name: 'Agency features', included: false },
       ]
     },
     {
       id: 'starter',
       name: 'Starter',
       price: '$10',
+      priceId: 'price_starter',
       period: 'per month',
       icon: Crown,
       popular: true,
@@ -58,12 +64,14 @@ export default function BillingPage() {
         { name: 'Basic analytics dashboard', included: true },
         { name: 'Priority email support', included: true },
         { name: 'Custom branding', included: false },
+        { name: 'Agency features', included: false },
       ]
     },
     {
       id: 'professional',
       name: 'Professional',
       price: '$30',
+      priceId: 'price_professional',
       period: 'per month',
       icon: Rocket,
       features: [
@@ -74,10 +82,83 @@ export default function BillingPage() {
         { name: 'Advanced analytics & reporting', included: true },
         { name: 'Priority support + phone', included: true },
         { name: 'Custom branding', included: true },
+        { name: 'Team collaboration (3 members)', included: true },
+        { name: 'Agency features', included: false },
+      ]
+    },
+    {
+      id: 'agency',
+      name: 'Agency',
+      price: '$99',
+      priceId: 'price_agency',
+      period: 'per month',
+      icon: Building,
+      enterprise: true,
+      features: [
+        { name: 'Unlimited client profiles', included: true },
+        { name: 'Advanced content scheduling', included: true },
+        { name: 'Real-time analytics & reporting', included: true },
+        { name: 'Multi-tenant architecture', included: true },
+        { name: 'Team management (10 members)', included: true },
+        { name: 'White-label branding', included: true },
+        { name: 'Dedicated account manager', included: true },
+        { name: 'API access & webhooks', included: true },
       ]
     }
   ];
 
+  const handleUpgrade = async (planId: string, priceId: string) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/stripe/create-checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          priceId,
+          planName: planId.toUpperCase(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        window.location.href = data.url;
+      } else {
+        toast.error(data.error || 'Failed to create checkout session');
+      }
+    } catch (error) {
+      toast.error('Failed to upgrade plan');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleManageBilling = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/stripe/customer-portal', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        window.location.href = data.url;
+      } else {
+        toast.error(data.error || 'Failed to open billing portal');
+      }
+    } catch (error) {
+      toast.error('Failed to open billing portal');
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const usageStats = {
     clients: { current: 3, limit: 5, percentage: 60 },
     posts: { current: 24, limit: 100, percentage: 24 },
@@ -87,10 +168,10 @@ export default function BillingPage() {
   const invoices = [
     {
       id: 'inv_001',
-      date: '2024-01-15',
+      date: '2025-01-15',
       amount: '$10.00',
       status: 'paid',
-      description: 'Starter Plan - January 2024',
+      description: 'Starter Plan - January 2025',
       downloadUrl: '#'
     },
     {
@@ -148,7 +229,7 @@ export default function BillingPage() {
                       $10 per month • Billed monthly
                     </p>
                     <p className="text-sm text-slate-500 mt-1">
-                      Next billing date: February 15, 2024
+                      Next billing date: February 15, 2025
                     </p>
                   </div>
                   <div className="text-right">
@@ -156,8 +237,13 @@ export default function BillingPage() {
                       Upgrade Plan
                     </Button>
                     <br />
-                    <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
-                      Cancel Subscription
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={handleManageBilling}
+                      disabled={isLoading}
+                    >
+                      Manage Billing
                     </Button>
                   </div>
                 </div>
@@ -203,7 +289,7 @@ export default function BillingPage() {
                 Available Plans
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {plans.map((plan) => (
                   <Card 
                     key={plan.id} 
@@ -211,21 +297,28 @@ export default function BillingPage() {
                       plan.id === currentPlan 
                         ? 'border-primary shadow-lg' 
                         : 'border-slate-200 dark:border-slate-700'
-                    } ${plan.popular ? 'border-2 border-primary' : ''}`}
+                    } ${plan.popular ? 'border-2 border-primary' : ''} ${plan.enterprise ? 'border-2 border-purple-500' : ''}`}
                   >
                     {plan.popular && (
                       <div className="absolute top-0 right-0 bg-primary text-white px-3 py-1 text-sm font-medium rounded-bl-lg">
                         Most Popular
                       </div>
                     )}
+                    {plan.enterprise && (
+                      <div className="absolute top-0 right-0 bg-purple-600 text-white px-3 py-1 text-sm font-medium rounded-bl-lg">
+                        Enterprise
+                      </div>
+                    )}
                     
                     <CardHeader className="text-center">
                       <div className="flex justify-center mb-4">
                         <div className={`flex h-12 w-12 items-center justify-center rounded-full ${
-                          plan.id === currentPlan ? 'bg-primary' : 'bg-primary/10'
+                          plan.id === currentPlan ? 'bg-primary' : 
+                          plan.enterprise ? 'bg-purple-500' : 'bg-primary/10'
                         }`}>
                           <plan.icon className={`h-6 w-6 ${
-                            plan.id === currentPlan ? 'text-white' : 'text-primary'
+                            plan.id === currentPlan ? 'text-white' : 
+                            plan.enterprise ? 'text-white' : 'text-primary'
                           }`} />
                         </div>
                       </div>
@@ -253,11 +346,14 @@ export default function BillingPage() {
                       </ul>
                       
                       <Button 
-                        className="w-full" 
-                        variant={plan.id === currentPlan ? 'outline' : 'default'}
+                        className={`w-full ${plan.enterprise ? 'bg-purple-600 hover:bg-purple-700' : ''}`}
+                        variant={plan.id === currentPlan ? 'outline' : plan.enterprise ? 'default' : 'default'}
                         disabled={plan.id === currentPlan}
+                        onClick={() => plan.id !== 'free' && plan.id !== currentPlan && handleUpgrade(plan.id, plan.priceId)}
                       >
-                        {plan.id === currentPlan ? 'Current Plan' : 'Upgrade'}
+                        {plan.id === currentPlan ? 'Current Plan' : 
+                         plan.id === 'free' ? 'Downgrade' : 
+                         plan.enterprise ? 'Contact Sales' : 'Upgrade'}
                       </Button>
                     </CardContent>
                   </Card>

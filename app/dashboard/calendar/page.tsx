@@ -39,7 +39,7 @@ export default function CalendarPage() {
         id: '1',
         title: 'Leadership Insights',
         content: 'Sharing thoughts on effective leadership in the digital age...',
-        scheduledFor: '2024-01-15T10:00:00Z',
+        scheduledFor: '2025-01-15T10:00:00Z',
         status: 'SCHEDULED',
         client: {
           id: '1',
@@ -52,7 +52,7 @@ export default function CalendarPage() {
         id: '2',
         title: 'Industry Trends',
         content: 'The future of AI in business operations...',
-        scheduledFor: '2024-01-16T14:30:00Z',
+        scheduledFor: '2025-01-16T14:30:00Z',
         status: 'SCHEDULED',
         client: {
           id: '2',
@@ -65,7 +65,7 @@ export default function CalendarPage() {
         id: '3',
         title: 'Team Building',
         content: 'Building high-performance teams in remote environments...',
-        scheduledFor: '2024-01-17T09:15:00Z',
+        scheduledFor: '2025-01-17T09:15:00Z',
         status: 'PUBLISHED',
         client: {
           id: '3',

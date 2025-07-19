@@ -15,6 +15,10 @@ model User {
   email     String   @unique
   name      String
   password  String
+  emailVerified Boolean @default(false)
+  emailVerificationToken String?
+  passwordResetToken String?
+  passwordResetExpires DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -23,17 +27,55 @@ model User {
   stripeSubscriptionId   String?
   stripePriceId          String?
   stripeCurrentPeriodEnd DateTime?
+  plan                   String @default("FREE")
+  planStatus             String @default("active")
 
   // Profile info
   avatar    String?
   timezone  String @default("UTC")
+  role      String @default("USER") // USER, ADMIN, AGENCY_OWNER
+  
+  // Agency relationship
+  agencyId  String?
+  agency    Agency? @relation("AgencyMembers", fields: [agencyId], references: [id])
+  ownedAgency Agency? @relation("AgencyOwner")
   
   clients   Client[]
   posts     Post[]
+  activities Activity[]
   
   @@map("users")
 }
 
+model Agency {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  logo        String?
+  website     String?
+  
+  // Subscription info
+  stripeCustomerId       String?
+  stripeSubscriptionId   String?
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+  plan                   String @default("AGENCY")
+  planStatus             String @default("active")
+  
+  // Settings
+  settings    Json?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  ownerId     String   @unique
+  owner       User     @relation("AgencyOwner", fields: [ownerId], references: [id])
+  members     User[]   @relation("AgencyMembers")
+  clients     Client[]
+  
+  @@map("agencies")
+}
 model Client {
   id          String   @id @default(cuid())
   name        String
@@ -58,8 +100,11 @@ model Client {
   
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agencyId    String?
+  agency      Agency?  @relation(fields: [agencyId], references: [id])
   posts       Post[]
   linkedinTokens LinkedInTokens?
+  analytics   ClientAnalytics[]
   
   @@map("clients")
 }
@@ -77,11 +122,15 @@ model Post {
   comments    Int @default(0)
   shares      Int @default(0)
   views       Int @default(0)
+  impressions Int @default(0)
+  clicks      Int @default(0)
+  engagementRate Float @default(0)
   
   // Metadata
   hashtags    String[]
   mentions    String[]
   linkedinPostId String?
+  linkedinUrn String?
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -90,10 +139,89 @@ model Post {
   client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analytics   PostAnalytics[]
   
   @@map("posts")
 }
 
+model PostAnalytics {
+  id          String   @id @default(cuid())
+  postId      String
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  // Metrics snapshot
+  likes       Int
+  comments    Int
+  shares      Int
+  views       Int
+  impressions Int
+  clicks      Int
+  
+  // Calculated metrics
+  engagementRate Float
+  clickThroughRate Float
+  
+  // Time-based data
+  recordedAt  DateTime @default(now())
+  
+  @@map("post_analytics")
+}
+
+model ClientAnalytics {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  // Aggregated metrics
+  totalPosts     Int
+  totalLikes     Int
+  totalComments  Int
+  totalShares    Int
+  totalViews     Int
+  totalImpressions Int
+  
+  // Calculated metrics
+  avgEngagementRate Float
+  followerGrowth    Int
+  
+  // Time period
+  period      String // daily, weekly, monthly
+  date        DateTime
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([clientId, period, date])
+  @@map("client_analytics")
+}
+
+model Activity {
+  id          String   @id @default(cuid())
+  type        String   // post_published, client_added, engagement_milestone, etc.
+  title       String
+  description String?
+  metadata    Json?
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("activities")
+}
+
+model WebhookEvent {
+  id          String   @id @default(cuid())
+  source      String   // stripe, linkedin
+  eventType   String
+  eventId     String   @unique
+  data        Json
+  processed   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  processedAt DateTime?
+  
+  @@map("webhook_events")
+}
 model ContentTemplate {
   id          String   @id @default(cuid())
   title       String

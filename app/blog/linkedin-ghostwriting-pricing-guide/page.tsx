@@ -129,7 +129,7 @@ export default function LinkedInGhostwritingPricingGuide() {
             <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl mb-6">
               LinkedIn Ghostwriting{' '}
               <span className="gradient-text">Pricing Guide</span>{' '}
-              2024
+              2025
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
               Complete guide to pricing your LinkedIn ghostwriting services. Learn what to charge, how to structure packages, and maximize your revenue.

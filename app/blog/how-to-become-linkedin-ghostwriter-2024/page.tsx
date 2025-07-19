@@ -91,7 +91,7 @@ export default function HowToBecomeLinkedInGhostwriter() {
             <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-5xl mb-6">
               How to Become a Professional{' '}
               <span className="gradient-text">LinkedIn Ghostwriter</span>{' '}
-              in 2024
+              in 2025
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
               Complete step-by-step guide to building a successful LinkedIn ghostwriting career. Learn the skills, strategies, and tools you need to succeed.

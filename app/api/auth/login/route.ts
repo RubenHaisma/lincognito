@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '@/lib/prisma';
+import { checkRateLimit, createRateLimitResponse, rateLimitConfigs } from '@/lib/rate-limiter';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -11,6 +12,12 @@ const loginSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const rateLimit = checkRateLimit(request, rateLimitConfigs.auth);
+    if (!rateLimit.allowed) {
+      return createRateLimitResponse(rateLimit.remaining, rateLimit.resetTime);
+    }
+
     const body = await request.json();
     const { email, password } = loginSchema.parse(body);
 

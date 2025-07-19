@@ -358,7 +358,7 @@ export default function CompliancePage() {
                   <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                     Annual audit by independent third-party
                   </p>
-                  <Badge variant="outline">Valid until Dec 2024</Badge>
+                  <Badge variant="outline">Valid until Dec 2025</Badge>
                 </CardContent>
               </Card>
               
@@ -388,7 +388,7 @@ export default function CompliancePage() {
                   <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                     Quarterly security assessments
                   </p>
-                  <Badge variant="outline">Last: Jan 2024</Badge>
+                  <Badge variant="outline">Last: Jan 2025</Badge>
                 </CardContent>
               </Card>
             </div>

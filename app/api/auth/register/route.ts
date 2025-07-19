@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '@/lib/prisma';
+import { sendWelcomeEmail, generateSecureToken } from '@/lib/email';
+import { checkRateLimit, createRateLimitResponse, rateLimitConfigs } from '@/lib/rate-limiter';
 import { z } from 'zod';
 
 const registerSchema = z.object({
@@ -12,6 +14,12 @@ const registerSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting
+    const rateLimit = checkRateLimit(request, rateLimitConfigs.auth);
+    if (!rateLimit.allowed) {
+      return createRateLimitResponse(rateLimit.remaining, rateLimit.resetTime);
+    }
+
     const body = await request.json();
     const { name, email, password } = registerSchema.parse(body);
 
@@ -36,14 +44,26 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
+        emailVerified: false,
+        emailVerificationToken: generateSecureToken(),
       },
       select: {
         id: true,
         name: true,
         email: true,
         createdAt: true,
+        emailVerified: true,
+        emailVerificationToken: true,
       },
     });
+
+    // Send welcome email with verification
+    try {
+      await sendWelcomeEmail(email, name, user.emailVerificationToken!);
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError);
+      // Don't fail registration if email fails
+    }
 
     // Generate JWT token
     const token = jwt.sign(

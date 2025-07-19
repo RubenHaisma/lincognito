@@ -110,7 +110,7 @@ export default function TermsPage() {
               Please read these terms carefully before using our LinkedIn ghostwriting platform.
             </p>
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Last updated: January 15, 2024 • Effective: January 15, 2024
+              Last updated: July 19, 2025 • Effective: July 19, 2025
             </p>
           </div>
 

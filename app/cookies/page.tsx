@@ -106,7 +106,7 @@ export default function CookiesPage() {
               Learn about how we use cookies and similar technologies to improve your experience on Lincognito.
             </p>
             <p className="text-sm text-slate-500 dark:text-slate-400">
-              Last updated: January 15, 2024
+              Last updated: January 15, 2025
             </p>
           </div>
 

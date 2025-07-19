@@ -7,6 +7,8 @@ interface User {
   id: string;
   email: string;
   name: string;
+  role: string;
+  agencyId?: string;
   subscription: {
     plan: 'free' | 'starter' | 'professional';
     status: 'active' | 'cancelled' | 'expired';
@@ -37,6 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           id: '1',
           email: 'demo@example.com',
           name: 'Demo User',
+          role: 'USER',
           subscription: {
             plan: 'starter',
             status: 'active'
@@ -59,6 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         id: '1',
         email,
         name: 'Demo User',
+        role: 'USER',
         subscription: {
           plan: 'starter',
           status: 'active'
@@ -85,6 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         id: '1',
         email,
         name,
+        role: 'USER',
         subscription: {
           plan: 'free',
           status: 'active'

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { verifyToken } from '@/lib/auth';
 import { getLinkedInAPIForClient } from '@/lib/linkedin';
+import { sendPostPublishedEmail } from '@/lib/email';
 import { z } from 'zod';
 
 const publishSchema = z.object({
@@ -79,8 +80,28 @@ export async function POST(request: NextRequest) {
               avatar: true,
             },
           },
+          user: {
+            select: {
+              name: true,
+              email: true,
+            },
+          },
         },
       });
+
+      // Send post published notification email
+      try {
+        await sendPostPublishedEmail(
+          updatedPost.user.email,
+          updatedPost.user.name,
+          updatedPost.client.name,
+          updatedPost.content,
+          linkedinResponse.shareUrl // If LinkedIn provides this
+        );
+      } catch (emailError) {
+        console.error('Failed to send post published email:', emailError);
+        // Don't fail publishing if email fails
+      }
 
       return NextResponse.json(updatedPost);
     } catch (linkedinError) {

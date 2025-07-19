@@ -108,7 +108,7 @@ export function Footer() {
       <div className="border-t border-slate-200 dark:border-slate-700 px-6 py-6">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            © 2024 Lincognito. All rights reserved.
+            © 2025 Lincognito. All rights reserved.
           </p>
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-4 md:mt-0">
             Made with ❤️ for LinkedIn ghostwriters

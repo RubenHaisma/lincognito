@@ -11,12 +11,12 @@ import { Footer } from '@/components/layout/footer';
 const blogPosts = [
   {
     id: 1,
-    title: 'How to Become a Professional LinkedIn Ghostwriter in 2024',
+    title: 'How to Become a Professional LinkedIn Ghostwriter in 2025',
     excerpt: 'Complete guide to starting your LinkedIn ghostwriting career, from finding clients to pricing your services.',
     category: 'Getting Started',
     readTime: '8 min read',
-    publishDate: '2024-01-15',
-    slug: 'how-to-become-linkedin-ghostwriter-2024',
+    publishDate: '2025-01-15',
+    slug: 'how-to-become-linkedin-ghostwriter-2025',
     featured: true
   },
   {
@@ -25,7 +25,7 @@ const blogPosts = [
     excerpt: 'Comprehensive pricing guide for LinkedIn ghostwriters, including rate structures and value-based pricing strategies.',
     category: 'Business',
     readTime: '6 min read',
-    publishDate: '2024-01-12',
+    publishDate: '2025-01-12',
     slug: 'linkedin-ghostwriting-pricing-guide'
   },
   {
@@ -34,7 +34,7 @@ const blogPosts = [
     excerpt: 'Proven LinkedIn post templates used by top ghostwriters to drive engagement and generate leads for clients.',
     category: 'Content Strategy',
     readTime: '10 min read',
-    publishDate: '2024-01-10',
+    publishDate: '2025-01-10',
     slug: 'linkedin-content-writing-templates'
   },
   {
@@ -43,7 +43,7 @@ const blogPosts = [
     excerpt: 'Understanding the distinction between LinkedIn ghostwriting and content writing to position your services correctly.',
     category: 'Industry Insights',
     readTime: '5 min read',
-    publishDate: '2024-01-08',
+    publishDate: '2025-01-08',
     slug: 'linkedin-ghostwriter-vs-content-writer'
   },
   {
@@ -52,7 +52,7 @@ const blogPosts = [
     excerpt: 'How professional LinkedIn ghostwriters create thought leadership content that establishes client authority.',
     category: 'Content Strategy',
     readTime: '7 min read',
-    publishDate: '2024-01-05',
+    publishDate: '2025-01-05',
     slug: 'linkedin-thought-leadership-writing'
   },
   {
@@ -61,7 +61,7 @@ const blogPosts = [
     excerpt: 'Essential ethical guidelines for LinkedIn ghostwriters to maintain integrity while serving clients effectively.',
     category: 'Ethics & Compliance',
     readTime: '6 min read',
-    publishDate: '2024-01-03',
+    publishDate: '2025-01-03',
     slug: 'linkedin-ghostwriting-ethics-guide'
   }
 ];

@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/contexts/auth-context';
 import { Shield, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { ForgotPasswordModal } from './forgot-password-modal';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface AuthModalProps {
 
 export function AuthModal({ isOpen, onClose, mode, onModeChange }: AuthModalProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -109,6 +111,18 @@ export function AuthModal({ isOpen, onClose, mode, onModeChange }: AuthModalProp
                     )}
                   </Button>
                 </div>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowForgotPassword(true)}
+                  className="text-primary hover:text-primary/80"
+                >
+                  Forgot password?
+                </Button>
               </div>
               
               <Button type="submit" className="w-full" disabled={isLoading}>
@@ -213,6 +227,11 @@ export function AuthModal({ isOpen, onClose, mode, onModeChange }: AuthModalProp
             Privacy Policy
           </a>
         </div>
+        
+        <ForgotPasswordModal
+          isOpen={showForgotPassword}
+          onClose={() => setShowForgotPassword(false)}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -45,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Blog posts
   const blogPosts = [
-    'how-to-become-linkedin-ghostwriter-2024',
+    'how-to-become-linkedin-ghostwriter-2025',
     'linkedin-ghostwriting-pricing-guide',
     'linkedin-content-writing-templates',
     'linkedin-ghostwriter-vs-content-writer',
