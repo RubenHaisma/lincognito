@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 export default function SettingsPage() {
   const { user } = useAuth();
@@ -92,7 +93,7 @@ export default function SettingsPage() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">
@@ -204,6 +205,12 @@ export default function SettingsPage() {
                     <Button onClick={() => handleSave('Profile')} disabled={isLoading}>
                       {isLoading ? 'Saving...' : 'Save Changes'}
                     </Button>
+                    
+                    <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                      <p className="text-sm text-green-700 dark:text-green-300">
+                        💡 <strong>Pro Tip:</strong> Keep your profile updated to help clients understand your expertise and background.
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -319,6 +326,12 @@ export default function SettingsPage() {
                     <Button onClick={() => handleSave('Notification')} disabled={isLoading}>
                       {isLoading ? 'Saving...' : 'Save Preferences'}
                     </Button>
+                    
+                    <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                      <p className="text-sm text-blue-700 dark:text-blue-300">
+                        📧 <strong>Email Preferences:</strong> You can unsubscribe from marketing emails while keeping important account notifications.
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -406,6 +419,12 @@ export default function SettingsPage() {
                     <Button onClick={() => handleSave('Privacy')} disabled={isLoading}>
                       {isLoading ? 'Saving...' : 'Save Settings'}
                     </Button>
+                    
+                    <div className="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                      <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                        🔒 <strong>Security Note:</strong> We recommend enabling 2FA for enhanced account security, especially for agency accounts.
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -468,9 +487,11 @@ export default function SettingsPage() {
                             </p>
                           </div>
                         </div>
-                        <Button variant="outline">
-                          Update
-                        </Button>
+                        <Link href="/dashboard/billing">
+                          <Button variant="outline">
+                            Update
+                          </Button>
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>
@@ -505,6 +526,13 @@ export default function SettingsPage() {
                             </div>
                           </div>
                         ))}
+                      </div>
+                      <div className="mt-4">
+                        <Link href="/dashboard/billing">
+                          <Button variant="outline" className="w-full">
+                            View Full Billing History
+                          </Button>
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>
@@ -623,7 +651,22 @@ export default function SettingsPage() {
                             Download all your data in JSON format
                           </p>
                         </div>
-                        <Button variant="outline">
+                        <Button variant="outline" onClick={() => {
+                          // Export user data
+                          const userData = {
+                            profile: settings.profile,
+                            preferences: settings.preferences,
+                            exportDate: new Date().toISOString()
+                          };
+                          const blob = new Blob([JSON.stringify(userData, null, 2)], { type: 'application/json' });
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = 'lincognito-data-export.json';
+                          a.click();
+                          URL.revokeObjectURL(url);
+                          toast.success('Data exported successfully');
+                        }}>
                           Export
                         </Button>
                       </div>
@@ -637,7 +680,14 @@ export default function SettingsPage() {
                             Clear all cached data and preferences
                           </p>
                         </div>
-                        <Button variant="outline">
+                        <Button variant="outline" onClick={() => {
+                          // Clear localStorage and sessionStorage
+                          localStorage.clear();
+                          sessionStorage.clear();
+                          toast.success('Cache cleared successfully');
+                          // Optionally reload the page
+                          window.location.reload();
+                        }}>
                           Clear
                         </Button>
                       </div>

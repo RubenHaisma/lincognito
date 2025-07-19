@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 interface Agency {
   id: string;
@@ -202,7 +203,7 @@ export default function AgencyPage() {
         <DashboardHeader />
         <div className="flex">
           <DashboardSidebar />
-          <main className="flex-1 p-8 ml-64">
+          <main className="flex-1 p-8 ml-64 mt-16">
             <div className="max-w-4xl mx-auto">
               <div className="text-center py-12">
                 <Building className="h-16 w-16 text-slate-400 mx-auto mb-6" />
@@ -278,7 +279,7 @@ export default function AgencyPage() {
                         <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)} className="flex-1">
                           Cancel
                         </Button>
-                        <Button type="submit" className="flex-1">
+                        <Button type="submit" className="flex-1" disabled={!inviteForm.email}>
                           Create Agency
                         </Button>
                       </div>
@@ -317,10 +318,12 @@ export default function AgencyPage() {
                 <Badge className="bg-green-100 text-green-800">
                   {agency.plan} Plan
                 </Badge>
-                <Button variant="outline">
-                  <Settings className="h-4 w-4 mr-2" />
-                  Settings
-                </Button>
+                <Link href="/dashboard/settings">
+                  <Button variant="outline">
+                    <Settings className="h-4 w-4 mr-2" />
+                    Settings
+                  </Button>
+                </Link>
               </div>
             </div>
 

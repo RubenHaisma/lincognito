@@ -178,6 +178,19 @@ export function ClientCollaborationPanel({
   };
 
   const requestRevision = async () => {
+    const revisionComment: Comment = {
+      id: Date.now().toString(),
+      author: {
+        name: clientName,
+        avatar: clientAvatar,
+        role: 'client'
+      },
+      content: 'Revision requested. Please see feedback above.',
+      timestamp: new Date().toISOString(),
+      type: 'revision_request'
+    };
+    
+    setComments([...comments, revisionComment]);
     onStatusChange('needs_revision');
     toast.success('Revision requested');
   };

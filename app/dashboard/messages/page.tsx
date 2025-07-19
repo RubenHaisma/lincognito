@@ -160,7 +160,7 @@ export default function MessagesPage() {
           avatar: ''
         },
         status: 'unread',
-        priority: 'high',
+        priority: 'high',     
         createdAt: '2025-01-15T14:20:00Z',
         updatedAt: '2025-01-15T14:20:00Z',
         attachments: [
@@ -200,6 +200,11 @@ export default function MessagesPage() {
   };
 
   const handleComposeMessage = async () => {
+    if (!composeForm.recipient || !composeForm.subject || !composeForm.content) {
+      toast.error('Please fill in all required fields');
+      return;
+    }
+    
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -259,7 +264,7 @@ export default function MessagesPage() {
         <DashboardHeader />
         <div className="flex">
           <DashboardSidebar />
-          <main className="flex-1 p-8 ml-64">
+          <main className="flex-1 p-8 ml-64 mt-16">
             <div className="animate-pulse">
               <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -278,7 +283,7 @@ export default function MessagesPage() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
@@ -361,7 +366,10 @@ export default function MessagesPage() {
                       <Button variant="outline" onClick={() => setIsComposeOpen(false)}>
                         Cancel
                       </Button>
-                      <Button onClick={handleComposeMessage}>
+                      <Button 
+                        onClick={handleComposeMessage} 
+                        disabled={!composeForm.recipient || !composeForm.subject || !composeForm.content}
+                      >
                         <Send className="h-4 w-4 mr-2" />
                         Send Message
                       </Button>
@@ -565,7 +573,19 @@ export default function MessagesPage() {
                             rows={4}
                           />
                           <div className="flex justify-end space-x-3">
-                            <Button variant="outline">
+                            <Button variant="outline" onClick={() => {
+                              // Simulate file attachment
+                              const input = document.createElement('input');
+                              input.type = 'file';
+                              input.accept = '.pdf,.doc,.docx,.txt,.jpg,.png';
+                              input.onchange = (e) => {
+                                const file = (e.target as HTMLInputElement).files?.[0];
+                                if (file) {
+                                  toast.success(`File "${file.name}" attached`);
+                                }
+                              };
+                              input.click();
+                            }}>
                               <Paperclip className="h-4 w-4 mr-2" />
                               Attach File
                             </Button>

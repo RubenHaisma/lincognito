@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 interface Widget {
   id: string;
@@ -56,14 +57,18 @@ export function DashboardWidgets() {
           Dashboard Overview
         </h2>
         <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Widget
-          </Button>
-          <Button variant="outline" size="sm">
-            <Move className="h-4 w-4 mr-2" />
-            Customize
-          </Button>
+          <Link href="/dashboard/settings">
+            <Button variant="outline" size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Widget
+            </Button>
+          </Link>
+          <Link href="/dashboard/settings">
+            <Button variant="outline" size="sm">
+              <Move className="h-4 w-4 mr-2" />
+              Customize
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -285,21 +290,21 @@ function QuickActionsWidget() {
       description: 'Write content for your clients',
       icon: Plus,
       color: 'bg-blue-600 hover:bg-blue-700',
-      action: () => console.log('Create post')
+      href: '/dashboard/content?action=create'
     },
     {
       title: 'Add Client',
       description: 'Set up a new client profile',
       icon: Users,
       color: 'bg-green-600 hover:bg-green-700',
-      action: () => console.log('Add client')
+      href: '/dashboard/clients?action=add'
     },
     {
       title: 'Schedule Content',
       description: 'Plan upcoming posts',
       icon: Calendar,
       color: 'bg-purple-600 hover:bg-purple-700',
-      action: () => console.log('Schedule')
+      href: '/dashboard/calendar?action=schedule'
     }
   ];
 
@@ -318,23 +323,24 @@ function QuickActionsWidget() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <Button
-              variant="outline"
-              className="w-full justify-start h-auto p-4 hover:bg-slate-50 dark:hover:bg-slate-800"
-              onClick={action.action}
-            >
-              <div className={`p-2 rounded-lg ${action.color} mr-4`}>
-                <action.icon className="h-4 w-4 text-white" />
-              </div>
-              <div className="text-left">
-                <div className="font-medium text-slate-900 dark:text-slate-100">
-                  {action.title}
+            <Link href={action.href}>
+              <Button
+                variant="outline"
+                className="w-full justify-start h-auto p-4 hover:bg-slate-50 dark:hover:bg-slate-800"
+              >
+                <div className={`p-2 rounded-lg ${action.color} mr-4`}>
+                  <action.icon className="h-4 w-4 text-white" />
                 </div>
-                <div className="text-sm text-slate-500 dark:text-slate-400">
-                  {action.description}
+                <div className="text-left">
+                  <div className="font-medium text-slate-900 dark:text-slate-100">
+                    {action.title}
+                  </div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                    {action.description}
+                  </div>
                 </div>
-              </div>
-            </Button>
+              </Button>
+            </Link>
           </motion.div>
         ))}
       </CardContent>

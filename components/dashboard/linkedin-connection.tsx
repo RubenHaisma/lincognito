@@ -21,22 +21,24 @@ export function LinkedInConnection({ clientId, isConnected, onConnectionChange }
     setIsConnecting(true);
     
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`/api/linkedin/auth?clientId=${clientId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const { authUrl } = await response.json();
-        window.location.href = authUrl;
-      } else {
-        throw new Error('Failed to initiate LinkedIn connection');
-      }
+      // Simulate LinkedIn OAuth flow for demo
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // In a real app, this would redirect to LinkedIn OAuth
+      toast.success('LinkedIn connection initiated! (Demo mode)');
+      
+      // Simulate successful connection after a delay
+      setTimeout(() => {
+        onConnectionChange();
+        toast.success('LinkedIn account connected successfully!');
+      }, 3000);
+      
     } catch (error) {
       toast.error('Failed to connect to LinkedIn');
-      setIsConnecting(false);
+    } finally {
+      setTimeout(() => {
+        setIsConnecting(false);
+      }, 2000);
     }
   };
 
@@ -75,7 +77,12 @@ export function LinkedInConnection({ clientId, isConnected, onConnectionChange }
               <Button variant="outline" size="sm">
                 Refresh Connection
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={() => {
+                if (window.confirm('Are you sure you want to disconnect this LinkedIn account?')) {
+                  onConnectionChange();
+                  toast.success('LinkedIn account disconnected');
+                }
+              }}>
                 Disconnect
               </Button>
             </div>

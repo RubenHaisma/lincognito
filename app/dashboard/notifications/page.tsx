@@ -164,6 +164,7 @@ export default function NotificationsPage() {
         ? { ...notification, isRead: true }
         : notification
     ));
+    toast.success('Notification marked as read');
   };
 
   const markAllAsRead = async () => {
@@ -178,6 +179,10 @@ export default function NotificationsPage() {
 
   const updateSettings = async (key: string, value: boolean) => {
     setSettings({ ...settings, [key]: value });
+    
+    // Persist settings to localStorage
+    const updatedSettings = { ...settings, [key]: value };
+    localStorage.setItem('notificationSettings', JSON.stringify(updatedSettings));
     toast.success('Notification settings updated');
   };
 
@@ -215,7 +220,7 @@ export default function NotificationsPage() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>

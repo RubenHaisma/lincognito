@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell } from 'recharts';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface ClientAnalytics {
   client: {
@@ -199,17 +200,19 @@ export default function ClientAnalyticsPage() {
       await fetchClientAnalytics();
     } catch (error) {
       console.error('Failed to sync analytics:', error);
+      toast.error('Failed to sync analytics data');
     } finally {
       setIsSyncing(false);
     }
   };
 
   const exportReport = () => {
-    // Simulate report export
     const reportData = {
       client: analytics?.client.name,
       period: `Last ${selectedPeriod} days`,
       overview: analytics?.overview,
+      topPosts: analytics?.topPosts,
+      audienceInsights: analytics?.audienceInsights,
       generatedAt: new Date().toISOString()
     };
     
@@ -217,11 +220,12 @@ export default function ClientAnalyticsPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${analytics?.client.name}-analytics-report.json`;
+    a.download = `${analytics?.client.name.replace(/\s+/g, '-').toLowerCase()}-analytics-report-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    toast.success('Analytics report exported successfully');
   };
 
   if (isLoading) {
@@ -230,7 +234,7 @@ export default function ClientAnalyticsPage() {
         <DashboardHeader />
         <div className="flex">
           <DashboardSidebar />
-          <main className="flex-1 p-8 ml-64">
+          <main className="flex-1 p-8 ml-64 mt-16">
             <div className="animate-pulse">
               <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
               <div className="space-y-4">

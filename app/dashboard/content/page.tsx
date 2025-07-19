@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -16,6 +16,7 @@ import { ClientCollaborationPanel } from '@/components/dashboard/client-collabor
 import { Plus, Edit, Trash2, FileText, Calendar, Send, Clock, CheckCircle, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
+import { useSearchParams } from 'next/navigation';
 
 interface Post {
   id: string;
@@ -47,8 +48,9 @@ interface Client {
   avatar?: string;
 }
 
-export default function ContentPage() {
+function ContentPageInner() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
   const [posts, setPosts] = useState<Post[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -70,7 +72,12 @@ export default function ContentPage() {
   useEffect(() => {
     fetchPosts();
     fetchClients();
-  }, []);
+    
+    // Check for action parameter to auto-open create post dialog
+    if (searchParams.get('action') === 'create') {
+      setIsDialogOpen(true);
+    }
+  }, [searchParams]);
 
   const fetchPosts = async () => {
     try {
@@ -259,7 +266,7 @@ export default function ContentPage() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
@@ -546,5 +553,30 @@ export default function ContentPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function ContentPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <DashboardHeader />
+        <div className="flex">
+          <DashboardSidebar />
+          <main className="flex-1 p-8 ml-64">
+            <div className="animate-pulse">
+              <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="h-32 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+                ))}
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    }>
+      <ContentPageInner />
+    </Suspense>
   );
 }

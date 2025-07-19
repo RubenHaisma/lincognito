@@ -70,7 +70,7 @@ export default function Dashboard() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64 dashboard-main">
+        <main className="flex-1 p-8 ml-64 dashboard-main mt-16">
           <div className="max-w-7xl mx-auto">
             <div className="mb-8 animate-fade-in">
               <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">

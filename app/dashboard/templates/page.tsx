@@ -289,7 +289,18 @@ Drop your thoughts in the comments 👇
       await navigator.clipboard.writeText(content);
       toast.success('Template copied to clipboard');
     } catch (error) {
-      toast.error('Failed to copy template');
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = content;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        toast.success('Template copied to clipboard');
+      } catch (fallbackError) {
+        toast.error('Failed to copy template');
+      }
+      document.body.removeChild(textArea);
     }
   };
 
@@ -299,6 +310,11 @@ Drop your thoughts in the comments 👇
         ? { ...template, isFavorite: !template.isFavorite }
         : template
     ));
+    
+    const template = templates.find(t => t.id === templateId);
+    if (template) {
+      toast.success(template.isFavorite ? 'Removed from favorites' : 'Added to favorites');
+    }
   };
 
   const filteredTemplates = templates.filter(template => {
@@ -336,7 +352,7 @@ Drop your thoughts in the comments 👇
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>

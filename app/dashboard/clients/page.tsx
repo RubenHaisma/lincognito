@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { toast } from 'sonner';
 import { LinkedInConnection } from '@/components/dashboard/linkedin-connection';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface Client {
   id: string;
@@ -46,8 +47,9 @@ interface Client {
   }>;
 }
 
-export default function ClientsPage() {
+function ClientsContent() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -66,7 +68,12 @@ export default function ClientsPage() {
 
   useEffect(() => {
     fetchClients();
-  }, []);
+    
+    // Check for action parameter to auto-open add client dialog
+    if (searchParams.get('action') === 'add') {
+      setIsDialogOpen(true);
+    }
+  }, [searchParams]);
 
   const fetchClients = async () => {
     try {
@@ -168,7 +175,7 @@ export default function ClientsPage() {
         <DashboardHeader />
         <div className="flex">
           <DashboardSidebar />
-          <main className="flex-1 p-8 ml-64">
+          <main className="flex-1 p-8 ml-64 mt-16">
             <div className="animate-pulse">
               <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -456,5 +463,30 @@ export default function ClientsPage() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function ClientsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <DashboardHeader />
+        <div className="flex">
+          <DashboardSidebar />
+          <main className="flex-1 p-8 ml-64 mt-16">
+            <div className="animate-pulse">
+              <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="h-64 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+                ))}
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    }>
+      <ClientsContent />
+    </Suspense>
   );
 }

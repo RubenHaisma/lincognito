@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -11,6 +11,11 @@ import { DashboardHeader } from '@/components/dashboard/dashboard-header';
 import { DashboardSidebar } from '@/components/dashboard/dashboard-sidebar';
 import { Plus, Calendar as CalendarIcon, Clock, Users, Edit, Trash2 } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, parseISO } from 'date-fns';
+import { useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ScheduledPost {
   id: string;
@@ -26,11 +31,13 @@ interface ScheduledPost {
   };
 }
 
-export default function CalendarPage() {
+function CalendarContent() {
+  const searchParams = useSearchParams();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [selectedClient, setSelectedClient] = useState<string>('all');
   const [scheduledPosts, setScheduledPosts] = useState<ScheduledPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
 
   // Mock data - in real app, this would come from API
   useEffect(() => {
@@ -78,7 +85,12 @@ export default function CalendarPage() {
     
     setScheduledPosts(mockPosts);
     setIsLoading(false);
-  }, []);
+    
+    // Check for action parameter to auto-open schedule dialog
+    if (searchParams.get('action') === 'schedule') {
+      setIsScheduleDialogOpen(true);
+    }
+  }, [searchParams]);
 
   const getPostsForDate = (date: Date) => {
     return scheduledPosts.filter(post => 
@@ -108,7 +120,7 @@ export default function CalendarPage() {
         <DashboardHeader />
         <div className="flex">
           <DashboardSidebar />
-          <main className="flex-1 p-8 ml-64">
+          <main className="flex-1 p-8 ml-64 mt-16">
             <div className="animate-pulse">
               <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -152,7 +164,7 @@ export default function CalendarPage() {
                   </SelectContent>
                 </Select>
                 
-                <Button>
+                <Button onClick={() => setIsScheduleDialogOpen(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Schedule Post
                 </Button>
@@ -205,7 +217,7 @@ export default function CalendarPage() {
                       <p className="text-slate-600 dark:text-slate-400">
                         No posts scheduled for this date
                       </p>
-                      <Button variant="outline" className="mt-4">
+                      <Button variant="outline" className="mt-4" onClick={() => setIsScheduleDialogOpen(true)}>
                         <Plus className="h-4 w-4 mr-2" />
                         Schedule Post
                       </Button>
@@ -308,9 +320,85 @@ export default function CalendarPage() {
                 </div>
               </CardContent>
             </Card>
+            
+            {/* Schedule Post Dialog */}
+            <Dialog open={isScheduleDialogOpen} onOpenChange={setIsScheduleDialogOpen}>
+              <DialogContent className="max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle>Schedule New Post</DialogTitle>
+                </DialogHeader>
+                
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="client">Client</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select client" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">Sarah Johnson</SelectItem>
+                        <SelectItem value="2">Michael Chen</SelectItem>
+                        <SelectItem value="3">Emma Rodriguez</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="title">Post Title</Label>
+                    <Input placeholder="Enter post title" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="content">Content</Label>
+                    <Textarea placeholder="Write your LinkedIn post content..." rows={6} />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="scheduledFor">Schedule For</Label>
+                    <Input type="datetime-local" />
+                  </div>
+                  
+                  <div className="flex justify-end space-x-3">
+                    <Button variant="outline" onClick={() => setIsScheduleDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button onClick={() => {
+                      setIsScheduleDialogOpen(false);
+                      toast.success('Post scheduled successfully!');
+                    }}>
+                      Schedule Post
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </main>
       </div>
     </div>
+  );
+}
+
+export default function CalendarPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <DashboardHeader />
+        <div className="flex">
+          <DashboardSidebar />
+          <main className="flex-1 p-8 ml-64 mt-16">
+            <div className="animate-pulse">
+              <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/4 mb-8"></div>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2 h-96 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+                <div className="h-96 bg-slate-200 dark:bg-slate-700 rounded-lg"></div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    }>
+      <CalendarContent />
+    </Suspense>
   );
 }

@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { MoreHorizontal, TrendingUp, Calendar, MessageSquare } from 'lucide-react';
+import Link from 'next/link';
 
 export function ClientOverview() {
   const clients = [
@@ -57,23 +58,26 @@ export function ClientOverview() {
 
   return (
     <Card className="animate-fade-in">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-          Client Overview
+      <CardHeader>
+        <CardTitle>
+          <Link href="/dashboard/clients">
+            <Button variant="outline" size="sm">
+              View All Clients
+            </Button>
+          </Link>
         </CardTitle>
-        <Button variant="outline" size="sm">
-          View All Clients
-        </Button>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {clients.map((client) => (
-            <div key={client.id} className="flex items-center space-x-4 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
+      <CardContent className="space-y-6">
+          {clients.map((client, index) => (
+            <div 
+              key={client.id} 
+              className={`flex items-center space-x-4 p-4 rounded-lg border border-slate-200 dark:border-slate-700 ${
+                index % 2 === 0 ? 'bg-slate-50 dark:bg-slate-800' : 'bg-white dark:bg-slate-900'
+              }`}>
               <Avatar className="h-12 w-12">
                 <AvatarImage src={client.avatar} alt={client.name} />
                 <AvatarFallback>{client.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-2">
                   <div>
@@ -118,19 +122,22 @@ export function ClientOverview() {
               </div>
               
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="sm">
-                  <Calendar className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="sm">
-                  <MessageSquare className="h-4 w-4" />
-                </Button>
+                <Link href="/dashboard/calendar">
+                  <Button variant="ghost" size="sm">
+                    <Calendar className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href="/dashboard/messages">
+                  <Button variant="ghost" size="sm">
+                    <MessageSquare className="h-4 w-4" />
+                  </Button>
+                </Link>
                 <Button variant="ghost" size="sm">
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </div>
             </div>
           ))}
-        </div>
       </CardContent>
     </Card>
   );

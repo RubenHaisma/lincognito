@@ -15,7 +15,8 @@ import {
   Calendar,
   Eye,
   Edit,
-  X
+  X,
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -95,7 +96,7 @@ export function PostPublishingWorkflow({
         await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
         
         // Simulate potential failure on LinkedIn auth (10% chance)
-        if (i === 1 && Math.random() < 0.1) {
+        if (i === 1 && Math.random() < 0.05) { // Reduced failure rate for demo
           throw new Error('LinkedIn authentication failed');
         }
         
@@ -252,7 +253,7 @@ export function PostPublishingWorkflow({
                   <Button variant="outline" onClick={() => setIsOpen(false)}>
                     Cancel
                   </Button>
-                  <Button onClick={startPublishing}>
+                  <Button onClick={startPublishing} disabled={!postContent.trim()}>
                     <Send className="h-4 w-4 mr-2" />
                     Start Publishing
                   </Button>
@@ -263,6 +264,19 @@ export function PostPublishingWorkflow({
                 <Button onClick={() => setIsOpen(false)}>
                   <CheckCircle className="h-4 w-4 mr-2" />
                   Done
+                </Button>
+              )}
+              
+              {publishingSteps.some(step => step.status === 'failed') && !isPublishing && (
+                <Button onClick={() => {
+                  // Reset failed steps and retry
+                  setPublishingSteps(steps => steps.map(step => 
+                    step.status === 'failed' ? { ...step, status: 'pending' } : step
+                  ));
+                  startPublishing();
+                }}>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Retry
                 </Button>
               )}
             </div>

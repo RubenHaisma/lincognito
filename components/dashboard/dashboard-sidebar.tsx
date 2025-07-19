@@ -62,7 +62,8 @@ export function DashboardSidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={cn(`sidebar-${item.name.toLowerCase().replace(' ', '-')}`,
+              className={cn(
+                `sidebar-${item.name.toLowerCase().replace(/\s+/g, '-')}`,
                 "flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                 pathname === item.href
                   ? "bg-primary text-white"
@@ -88,9 +89,11 @@ export function DashboardSidebar() {
                 <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                   Get unlimited clients
                 </div>
-                <Button size="sm" className="w-full mt-3">
-                  Upgrade
-                </Button>
+                <Link href="/dashboard/billing">
+                  <Button size="sm" className="w-full mt-3">
+                    Upgrade
+                  </Button>
+                </Link>
               </>
             )}
           </div>

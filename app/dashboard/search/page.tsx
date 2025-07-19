@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/contexts/auth-context';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 interface SearchResult {
   id: string;
@@ -169,6 +170,7 @@ export default function SearchPage() {
       
     } catch (error) {
       console.error('Search failed:', error);
+      toast.error('Search failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -218,7 +220,7 @@ export default function SearchPage() {
       <DashboardHeader />
       <div className="flex">
         <DashboardSidebar />
-        <main className="flex-1 p-8 ml-64">
+        <main className="flex-1 p-8 ml-64 mt-16">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">
@@ -263,6 +265,22 @@ export default function SearchPage() {
                     </Button>
                   </div>
                 </form>
+                
+                {searchQuery && (
+                  <div className="mt-4 flex items-center justify-between text-sm text-slate-500">
+                    <span>Search results for "{searchQuery}"</span>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => {
+                        setSearchQuery('');
+                        setSearchResults([]);
+                      }}
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
