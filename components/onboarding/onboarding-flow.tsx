@@ -20,7 +20,8 @@ import {
   Calendar,
   BarChart3,
   Shield,
-  Zap
+  Zap,
+  TrendingUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -131,7 +132,10 @@ export function OnboardingFlow({ isOpen, onComplete, onSkip }: OnboardingFlowPro
             >
               <div className="flex items-center justify-center mb-4">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  <steps[currentStep].icon className="h-8 w-8 text-primary" />
+                  {(() => {
+                    const IconComponent = steps[currentStep].icon;
+                    return <IconComponent className="h-8 w-8 text-primary" />;
+                  })()}
                 </div>
               </div>
               <CardTitle className="text-2xl font-bold text-slate-900 dark:text-slate-100">

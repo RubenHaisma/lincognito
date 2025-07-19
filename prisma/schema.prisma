@@ -43,6 +43,8 @@ model Client {
   industry    String?
   avatar      String?
   linkedinUrl String?
+  linkedinProfileId String?
+  accountType String? // PERSONAL or COMPANY
   
   // Brand guidelines
   brandGuidelines String?
@@ -57,6 +59,7 @@ model Client {
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   posts       Post[]
+  linkedinTokens LinkedInTokens?
   
   @@map("clients")
 }
@@ -78,6 +81,7 @@ model Post {
   // Metadata
   hashtags    String[]
   mentions    String[]
+  linkedinPostId String?
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -103,6 +107,22 @@ model ContentTemplate {
   userId      String
   
   @@map("content_templates")
+}
+
+model LinkedInTokens {
+  id           String   @id @default(cuid())
+  clientId     String   @unique
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime
+  scope        String?
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  client       Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  
+  @@map("linkedin_tokens")
 }
 
 enum PostStatus {
